@@ -23,6 +23,12 @@ trait initTrait
 	}
 
 
+	public function createComponentMenuCmp()
+	{
+		return $this->context->getByType("App\Components\MenuCmp\MenuCmpFactory")->create();
+	}
+
+
 	public function createComponentProdejCmp()
 	{
 		return $this->context->getByType("App\Components\ProdejCmp\ProdejCmpFactory")->create();

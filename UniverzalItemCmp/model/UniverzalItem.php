@@ -11,7 +11,7 @@ class UniverzalItems extends \App\Model\Table{
                     ->insert(array(
                         'title' => $values->cmp_title_id,
 			'text1' => $values->cmp_text_id,
-			'img1' => $values->cmp_simpleimage_id,
+			'img1' => $values->cmp_image_id,
 			'itemname' => $values->itemName,
         ));
     }
@@ -23,7 +23,7 @@ class UniverzalItems extends \App\Model\Table{
                     ->update(array(
                         'title' => $values->cmp_title_id,
 			'text1' => $values->cmp_text_id,
-			'img1' => $values->cmp_simpleimage_id,
+			'img1' => $values->cmp_image_id,
         ));
     }
     

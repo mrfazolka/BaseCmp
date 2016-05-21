@@ -162,32 +162,34 @@ abstract class BaseStandardCmp extends \App\Components\BaseCmp\BaseCmp implement
      */
     protected function setTemplate()
     {
-	$trace = debug_backtrace();
-	$caller = $trace[1];
-	$reflector = new \ReflectionClass(get_class($caller["object"]));
-	$callerClassFile = $reflector->getFileName();
-	$templatesDir = dirname($callerClassFile) . '/templates/';
-	
-//	dump($caller, $trace);exit;
-	
-	$name = $caller['function']; //jméno render metody
-	$renderName = lcfirst(str_replace("render", "", $name)).".latte"; //od ní odvozené jméno templatu - odstraním render a zbyde název templatu
-	//$renderName = $renderName == "Default" ? "" : $renderName; //když je fileName default, nastav ho na "" - default template nemusí mí t na konci "Default (templateNameDefault)
-	
-//	dump($caller["class"],get_class($caller["object"]),$callerClassFile,$templatesDir,$this->templateSet, $renderName);
-	
-	if(!$this->templateSet){
-	    $this->template->setFile($templatesDir.$renderName);
-	}
-	else{
-	    if(!is_dir($templatesDir."templateSets")){ //check if templateSets dir exists
-		dump($exStr="Složka 'templateSets' v komponentě třídy ".get_class($this)." neexistuje");
-		throw new \Exception($exStr);
+	if(!$this->template->getFile()){ //když není nastaven jiný template, nastav automaticky
+	    $trace = debug_backtrace();
+	    $caller = $trace[1];
+	    $reflector = new \ReflectionClass(get_class($caller["object"]));
+	    $callerClassFile = $reflector->getFileName();
+	    $templatesDir = dirname($callerClassFile) . '/templates/';
+
+    //	dump($caller, $trace);exit;
+
+	    $name = $caller['function']; //jméno render metody
+	    $renderName = lcfirst(str_replace("render", "", $name)).".latte"; //od ní odvozené jméno templatu - odstraním render a zbyde název templatu
+	    //$renderName = $renderName == "Default" ? "" : $renderName; //když je fileName default, nastav ho na "" - default template nemusí mí t na konci "Default (templateNameDefault)
+
+    //	dump($caller["class"],get_class($caller["object"]),$callerClassFile,$templatesDir,$this->templateSet, $renderName);
+
+	    if(!$this->templateSet){
+		$this->template->setFile($templatesDir.$renderName);
 	    }
-	    
-	    $filePath = $templatesDir."templateSets/".$this->templateSet."/".$renderName;
-//	    dump($filePath);
-	    is_file($filePath) ? $this->template->setFile($filePath) : $this->template->setFile($templatesDir.$renderName);
+	    else{
+		if(!is_dir($templatesDir."templateSets")){ //check if templateSets dir exists
+		    dump($exStr="Složka 'templateSets' v komponentě třídy ".get_class($this)." neexistuje");
+		    throw new \Exception($exStr);
+		}
+
+		$filePath = $templatesDir."templateSets/".$this->templateSet."/".$renderName;
+    //	    dump($filePath);
+		is_file($filePath) ? $this->template->setFile($filePath) : $this->template->setFile($templatesDir.$renderName);
+	    }
 	}
     }
     
@@ -280,7 +282,7 @@ abstract class BaseStandardCmp extends \App\Components\BaseCmp\BaseCmp implement
 		    if($this->$staticParamKey == null) //když už je param nastavený (např. jsem ho nastavil v handle metodě), tak ho neměň
 			$this->$staticParamKey = $staticParamValue;
 		}else{
-		    throw new \Exception("Property $dbParamKey doesn't exist in ".get_class($this)." or has not enought access grants!");
+		    throw new \Exception("Property $staticParamKey doesn't exist in ".get_class($this)." or has not enought access grants!");
 		}
 	    }
 	}

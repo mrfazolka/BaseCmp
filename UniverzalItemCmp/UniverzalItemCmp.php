@@ -25,7 +25,7 @@ abstract class UniverzalItemCmp extends \App\Components\BaseStandardCmp\BaseStan
 	
 	$this->template->row = $row;
 //	if(get_class($this)=="App\Components\UniverzalItem\UniverzalItemStuffCmp"){ //debug UniverzalItemStuffCmp; get related row
-//	    dump($row->ref("cmp_simpleimage", "img1"));exit;
+//	    dump($row->ref("cmp_image", "img1"));exit;
 //	}
     }
     
