@@ -1,6 +1,6 @@
 <?php
 /**
- * C:\xampp\htdocs\harmonydesign.cz\app\components\SmartCmps\base\initTrait.php
+ * C:\xampp\htdocs\harmonydesign.cz\app\components\SmartCmps\BaseCmp\initTrait.php
  */
 trait initTrait
 {
