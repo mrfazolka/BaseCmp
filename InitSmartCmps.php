@@ -11,7 +11,7 @@ class InitSmartCmps extends \Nette\Object{
 	    foreach($actualCmpClasses as $cmpFactoryClassName=>$cmpInfo){
 		$trait->addMethod("createComponent".$cmpInfo["cmpFullName"])->setBody('return $this->context->getByType("'.$cmpFactoryClassName.'")->create();');
 	    }
-	    $phpFilePath = __DIR__."\\initTrait.php";
+	    $phpFilePath = __DIR__."/initTrait.php";
 	    $trait->setType(Nette\PhpGenerator\ClassType::TYPE_TRAIT);
 	    $trait->addDocument($phpFilePath);
 //	    $trait->addProperty("lastCmpClasses", $actualCmpClasses);
